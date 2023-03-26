@@ -1,0 +1,51 @@
+name: Add binaries to release
+run-name: Add binaries to release ${{ github.event.release.tag_name }}
+
+on:
+  release:
+    types:
+     - created
+
+# Add binaries to release
+
+jobs:
+  add-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dart-lang/setup-dart@v1
+        with:
+          channel: stable
+      - run: dart pub get
+      - run: dart analyze
+      - run: dart compile exe bin/resource_generator.dart
+      - run: chmod +x bin/resource_generator.exe
+      - run: mv bin/resource_generator.exe ${{ github.event.release.tag_name }}_linux_amd64
+      - run: gh release upload ${{ github.event.release.tag_name }} ${{ github.event.release.tag_name }}_linux_amd64
+        shell: bash
+  add-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dart-lang/setup-dart@v1
+        with:
+          channel: stable
+      - run: dart pub get
+      - run: dart analyze
+      - run: dart compile exe bin/resource_generator.dart
+      - run: mv bin/resource_generator.exe ${{ github.event.release.tag_name }}_macos_amd64
+      - run: gh release upload ${{ github.event.release.tag_name }} ${{ github.event.release.tag_name }}_macos_amd64
+        shell: bash
+  add-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dart-lang/setup-dart@v1
+        with:
+          channel: stable
+      - run: dart pub get
+      - run: dart analyze
+      - run: dart compile exe bin/resource_generator.dart
+      - run: mv bin/resource_generator.exe ${{ github.event.release.tag_name }}_windows_amd64.exe
+      - run: gh release upload ${{ github.event.release.tag_name }} ${{ github.event.release.tag_name }}_windows_amd64.exe
+        shell: bash
