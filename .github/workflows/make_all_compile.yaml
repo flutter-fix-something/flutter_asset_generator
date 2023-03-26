@@ -29,8 +29,9 @@ jobs:
           dart analyze
           export DART_BINS=$(ls bin/*.dart)
           for dart_file in $DART_BINS; do
+              echo "Compiling $dart_file"
               dart compile exe $dart_file
           done
           chmod +x bin/*.exe
           tar -czvf ${{matrix.os}}_latest.tar.gz bin/*.exe
-          ght release upload ${{ github.event.release.tag_name }} ${{matrix.os}}.tar.gz
+          gh release upload ${{ github.event.release.tag_name }} ${{matrix.os}}.tar.gz
