@@ -34,4 +34,4 @@ jobs:
           done
           chmod +x bin/*.exe
           tar -czvf ${{matrix.os}}_latest.tar.gz bin/*.exe
-          gh release upload ${{ github.event.release.tag_name }} ${{matrix.os}}.tar.gz
+          gh release upload ${{ github.event.release.tag_name }} ${{matrix.os}}_latest.tar.gz
