@@ -42,7 +42,7 @@ jobs:
       - run: dart analyze
       - run: dart compile exe ${{ env.DART }}
       - run: |
-          export target=${{env.RELEASE_PREFIX}}__${{ github.event.release.tag_name }}_macos_amd64
+          export target=${{env.RELEASE_PREFIX}}_${{ github.event.release.tag_name }}_macos_amd64
           mv ${{ env.EXE}} $target
           gh release upload ${{ github.event.release.tag_name }} $target
         shell: bash
@@ -57,7 +57,7 @@ jobs:
       - run: dart analyze
       - run: dart compile exe ${{ env.DART }}
       - run: |
-          export target=${{env.RELEASE_PREFIX}}__${{ github.event.release.tag_name }}_windows_amd64.exe
+          export target=${{env.RELEASE_PREFIX}}_${{ github.event.release.tag_name }}_windows_amd64.exe
           mv ${{ env.EXE}} $target
           gh release upload ${{ github.event.release.tag_name }} $target
         shell: bash
