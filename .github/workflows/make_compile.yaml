@@ -12,6 +12,7 @@ env:
   DART: bin/resource_generator.dart
   EXE: bin/resource_generator.exe
   RELEASE_PREFIX: fgen
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   add-linux:
@@ -30,8 +31,6 @@ jobs:
           mv ${{ env.EXE}} $target
           gh release upload ${{ github.event.release.tag_name }} $target
         shell: bash
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   add-macos:
     runs-on: macos-latest
     steps:
@@ -47,8 +46,6 @@ jobs:
           mv ${{ env.EXE}} $target
           gh release upload ${{ github.event.release.tag_name }} $target
         shell: bash
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   add-windows:
     runs-on: windows-latest
     steps:
@@ -64,5 +61,3 @@ jobs:
           mv ${{ env.EXE}} $target
           gh release upload ${{ github.event.release.tag_name }} $target
         shell: bash
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
