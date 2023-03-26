@@ -31,6 +31,7 @@ jobs:
           mv ${{ env.EXE}} $target
           gh release upload ${{ github.event.release.tag_name }} $target
         shell: bash
+        name: Upload linux binary
   add-macos:
     runs-on: macos-latest
     steps:
@@ -46,6 +47,7 @@ jobs:
           mv ${{ env.EXE}} $target
           gh release upload ${{ github.event.release.tag_name }} $target
         shell: bash
+        name: Upload macos binary
   add-windows:
     runs-on: windows-latest
     steps:
@@ -61,3 +63,4 @@ jobs:
           mv ${{ env.EXE}} $target
           gh release upload ${{ github.event.release.tag_name }} $target
         shell: bash
+        name: Upload windows binary
