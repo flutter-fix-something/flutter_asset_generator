@@ -8,6 +8,10 @@ on:
 
 # Add binaries to release
 
+env:
+  DART: bin/resource_generator.dart
+  EXE: bin/resource_generator.exe
+
 jobs:
   add-linux:
     runs-on: ubuntu-latest
@@ -18,11 +22,12 @@ jobs:
           channel: stable
       - run: dart pub get
       - run: dart analyze
-      - run: dart compile exe bin/resource_generator.dart
-      - run: chmod +x bin/resource_generator.exe
-      - run: mv bin/resource_generator.exe ${{ github.event.release.tag_name }}_linux_amd64
-      - run: gh release upload ${{ github.event.release.tag_name }} ${{ github.event.release.tag_name }}_linux_amd64
-        shell: bash
+      - run: dart compile exe ${{ env.DART }}}
+      - run: chmod +x ${{ env.EXE }}
+      - run: |
+          export target=fgen_${{ github.event.release.tag_name }}_linux_amd64
+          mv ${{ env.EXE}} $target
+          gh release upload ${{ github.event.release.tag_name }} $target
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   add-macos:
@@ -34,10 +39,11 @@ jobs:
           channel: stable
       - run: dart pub get
       - run: dart analyze
-      - run: dart compile exe bin/resource_generator.dart
-      - run: mv bin/resource_generator.exe ${{ github.event.release.tag_name }}_macos_amd64
-      - run: gh release upload ${{ github.event.release.tag_name }} ${{ github.event.release.tag_name }}_macos_amd64
-        shell: bash
+      - run: dart compile exe ${{ env.DART }}
+      - run: |
+          export target=fgen_${{ github.event.release.tag_name }}_macos_amd64
+          mv ${{ env.EXE}} $target
+          gh release upload ${{ github.event.release.tag_name }} $target
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   add-windows:
@@ -49,9 +55,10 @@ jobs:
           channel: stable
       - run: dart pub get
       - run: dart analyze
-      - run: dart compile exe bin/resource_generator.dart
-      - run: mv bin/resource_generator.exe ${{ github.event.release.tag_name }}_windows_amd64.exe
-      - run: gh release upload ${{ github.event.release.tag_name }} ${{ github.event.release.tag_name }}_windows_amd64.exe
-        shell: bash
+      - run: dart compile exe ${{ env.DART }}
+      - run: |
+          export target=fgen_${{ github.event.release.tag_name }}_windows_amd64.exe
+          mv ${{ env.EXE}} $target
+          gh release upload ${{ github.event.release.tag_name }} $target
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
