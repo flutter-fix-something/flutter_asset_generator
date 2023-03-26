@@ -23,7 +23,7 @@ jobs:
       - run: mv bin/resource_generator.exe ${{ github.event.release.tag_name }}_linux_amd64
       - run: gh release upload ${{ github.event.release.tag_name }} ${{ github.event.release.tag_name }}_linux_amd64
         shell: bash
-    environment:
+    env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   add-macos:
     runs-on: macos-latest
@@ -38,7 +38,7 @@ jobs:
       - run: mv bin/resource_generator.exe ${{ github.event.release.tag_name }}_macos_amd64
       - run: gh release upload ${{ github.event.release.tag_name }} ${{ github.event.release.tag_name }}_macos_amd64
         shell: bash
-    environment:
+    env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   add-windows:
     runs-on: windows-latest
@@ -53,5 +53,5 @@ jobs:
       - run: mv bin/resource_generator.exe ${{ github.event.release.tag_name }}_windows_amd64.exe
       - run: gh release upload ${{ github.event.release.tag_name }} ${{ github.event.release.tag_name }}_windows_amd64.exe
         shell: bash
-    environment:
+    env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
